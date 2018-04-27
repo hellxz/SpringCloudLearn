@@ -1,6 +1,10 @@
 package com.cnblogs.hellxz.servcie;
 
+import com.cnblogs.hellxz.entity.User;
+import com.cnblogs.hellxz.hystrix.UserCommand;
 import com.netflix.discovery.DiscoveryClient;
+import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 
 /**
@@ -46,5 +52,42 @@ public class RibbonService {
      */
     public String hystrixFallback(){
         return "error";
+    }
+
+    /**
+     * 使用同步方法调用接口
+     */
+    public User useSyncRequestGetUser(){
+        //这里使用Spring注入的RestTemplate, Spring注入的对象都是静态的
+        User userSync = new UserCommand(com.netflix.hystrix.HystrixCommand.Setter.withGroupKey(
+                HystrixCommandGroupKey.Factory.asKey("")).andCommandPropertiesDefaults(
+                        HystrixCommandProperties.Setter().withExecutionTimeoutInMilliseconds(5000)),
+                restTemplate ,0L).execute();
+
+        return userSync;
+    }
+
+    /**
+     * 使用异步方法调用接口
+     */
+    public User useAsyncRequestGetUser(){
+
+        Future<User> userFuture = new UserCommand(com.netflix.hystrix.HystrixCommand.Setter.withGroupKey(
+                HystrixCommandGroupKey.Factory.asKey("")).andCommandPropertiesDefaults(
+                        HystrixCommandProperties.Setter().withExecutionTimeoutInMilliseconds(5000)),
+                restTemplate,0L).queue();
+
+        User userAsync = null;
+
+        try {
+            //获取Future内部包含的对象
+            userAsync = userFuture.get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return userAsync;
     }
 }
