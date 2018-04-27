@@ -1,0 +1,15 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: eureka-service
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1111/eureka/,http://peer2:1112/eureka/
+    healthcheck:                                              # 开启心跳检测
+      enabled: true
+  instance:
+    lease-renewal-interval-in-seconds: 30		# 续约更新时间间隔（默认30秒）
+    lease-expiration-duration-in-seconds: 90 	# 续约到期时间（默认90秒）

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="EurekaServer" />
+        <module name="EurekaServiceProvider" />
+        <module name="RibbonConsumHystrix" />
+        <module name="RibbonCustomer" />
+        <module name="springboot" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="EurekaServer" target="1.8" />
+      <module name="EurekaServiceProvider" target="1.8" />
+      <module name="HHHH" target="1.5" />
+      <module name="RibbonConsumHystrix" target="1.8" />
+      <module name="RibbonCustomer" target="1.8" />
+      <module name="springboot" target="1.6" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

@@ -1,0 +1,14 @@
+server:
+  port: 9000   #为ribbon-customer指定服务端口
+
+spring:
+  application:
+    name: ribbon-customer  #指定应用名
+
+#指定eureka注册中心地址
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1111/eureka/,http://peer2:1112/eureka/
+    healthcheck:
+      enabled: true
