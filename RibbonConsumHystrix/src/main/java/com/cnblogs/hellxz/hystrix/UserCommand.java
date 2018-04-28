@@ -5,6 +5,7 @@ import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import org.springframework.web.client.RestTemplate;
+import rx.Observable;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -16,7 +17,6 @@ import java.util.concurrent.Future;
  */
 public class UserCommand extends HystrixCommand<User> {
 
-//    @Autowired
     private RestTemplate restTemplate;
     private Long id;
 
@@ -33,9 +33,9 @@ public class UserCommand extends HystrixCommand<User> {
     @Override
     protected User run() {
         //本地请求
-//        return restTemplate.getForObject("http://localhost:8080/user", User.class);
+        return restTemplate.getForObject("http://localhost:8080/user", User.class);
         //连注册中心请求
-        return restTemplate.getForObject("http://eureka-service/user", User.class);
+//        return restTemplate.getForObject("http://eureka-service/user", User.class);
     }
 
     /**
@@ -67,6 +67,13 @@ public class UserCommand extends HystrixCommand<User> {
             e.printStackTrace();
         }
         System.out.println("------------------This is async request's response:"+userAsync);
+
+        //observe和toObservable方法
+        UserCommand userCommand = new UserCommand(HystrixCommand.Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("")), new RestTemplate(),1L);
+        Observable<User> observe = userCommand.observe();
+        System.out.println("------------------This is observe's response:"+observe);
+        Observable<User> userObservable = userCommand.toObservable();
+        System.out.println("------------------This is toObserve's response:"+userObservable);
     }
 
 }
