@@ -76,4 +76,12 @@ public class RibbonController {
         //这里只是简单拿到了这个对象，对此本人没有深入，有兴趣可以研究
     }
 
+    /**
+     * 使用自定义HystrixCommand的默认fallback方法
+     */
+    @GetMapping("/fallback")
+    public User fallback(){
+        return service.defaultCommandFallback();
+    }
+
 }

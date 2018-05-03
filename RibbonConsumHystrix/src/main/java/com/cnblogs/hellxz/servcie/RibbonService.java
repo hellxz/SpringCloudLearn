@@ -138,4 +138,82 @@ public class RibbonService {
         });
     }
 
+//=================================================================
+    /**
+     * 下面我会定义一种特殊情况在假如我们要调用的方法因为网络等原因无法服务，那么会调用specifyFallback方法
+     * 但是如果specifyFallback方法也超时了呢？
+     * 我们可以像定义方法一样为回调方法来设定第二个回调方法！
+     * 这里只是举例说明有这种用法，不必苛责
+     * 为了达到预期的效果，这里为方法加入线程睡眠
+     *
+     * 使用自定义服务降级
+     */
+    @HystrixCommand(fallbackMethod = "fallback1")
+    public User defaultCommandFallback(){
+        //睡眠3秒，让回调生效
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return restTemplate.getForObject("http://eureka-service/user", User.class);
+    }
+
+    //第一个fallback method
+    @HystrixCommand(fallbackMethod = "fallback2")
+    public User fallback1(){
+
+        //睡眠3秒，让回调生效
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        User user = new User();
+        user.setName("First fallback method !");
+        return user;
+    }
+
+    //第二个fallback method
+    public User fallback2(){
+        User user = new User();
+        user.setName("Second fallback method !");
+        return user;
+    }
+
+//=================================================================
+    /**
+     * 异常传播
+     *
+     * 如果HystrixCommand注解修饰的方法抛出异常，除了HystrixBadRequestException方法外的异常都会被认为方法调用失败，
+     * 从而执行fallback方法。很多时候我们是不想这样的，HystrixCommand恰好支持忽略指定异常，此处不作调用了
+     * 大家看看代码就好
+     */
+    @HystrixCommand(ignoreExceptions = {InterruptedException.class}, fallbackMethod = "fallback2")
+    public User ignoreException(){
+
+        //睡眠3秒，让回调生效
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        User user = new User();
+        user.setName("Ignore exception succeed !");
+        return user;
+    }
+
+    /**
+     * 异常获取
+     */
+    @HystrixCommand(fallbackMethod = "fallback3")
+    public User catchException(){
+        throw new RuntimeException("catched this runtime exception !");
+    }
+
+    public User fallback3(Throwable e){
+        logger.info("捕获到异常： "+e.getMessage());
+        return null;
+    }
+
 }
