@@ -1,9 +1,9 @@
 package com.cnblogs.hellxz.hystrix;
 
 import com.cnblogs.hellxz.entity.User;
-import com.netflix.hystrix.HystrixCommand;
-import com.netflix.hystrix.HystrixCommandGroupKey;
-import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.*;
+import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategy;
+import com.netflix.hystrix.strategy.concurrency.HystrixConcurrencyStrategyDefault;
 import org.springframework.web.client.RestTemplate;
 import rx.Observable;
 
@@ -18,12 +18,70 @@ import java.util.concurrent.Future;
 public class UserCommand extends HystrixCommand<User> {
 
     private RestTemplate restTemplate;
-    private Long id;
+    private static Long id;
 
     public UserCommand(Setter setter, RestTemplate restTemplate, Long id){
         super(setter);
         this.restTemplate = restTemplate;
         this.id = id;
+    }
+
+    //=====================HystrixCommand构造方法=========================
+    /**
+     * 扩展：Setter对象是用于设置参数的，比如，我们可以通过它来划分线程池，可以设置组名Setter.withGroupKey(HystrixCommandGroupKey.Factory.asKey("组名字段"))
+     * 设置命令名Setter.andCommandKey(HystrixCommandKey.Factory.asKey("命令名"))
+     * 设置线程池Setter.andThreadPoolKey(HystrixThreadPoolKey.Factory.asKey("线程池名"))
+     * 其中CommandKey是可选的，GroupKey是必要的，Hystrix会通过组名来组织和统计命令的告警和仪表盘信息，在没有指定线程池的时候，默认会将相同组名的命令使用同一个线程池，
+     * 我们可以通过设置组名来实现线程池的划分;指定线程池的话，以线程池名划分线程池
+     *
+     * 下边举几个例子，重载UserCommand的构造方法，注意：上边的构造方法是为了初始化成员变量，本质与只有Setter的构造方法相同
+     * 由下几个例子我们可以发现Setter包含了组名、命令名、线程池名、超时时间，详情可以看源码
+     */
+    //只有setter的构造方法
+    public UserCommand(Setter setter){
+        super(setter);
+    }
+    //只设置组名的构造方法
+    public UserCommand(HystrixCommandGroupKey group) {
+        super(group);
+    }
+    //设置组名、线程池名
+    public UserCommand(HystrixCommandGroupKey group, HystrixThreadPoolKey threadPool) {
+        super(group,threadPool);
+    }
+    //设置组名和执行超时时间
+    public UserCommand(HystrixCommandGroupKey group, int executionIsolationThreadTimeoutInMilliseconds) {
+        super(group,executionIsolationThreadTimeoutInMilliseconds);
+    }
+    //设置组名、命令名、线程池名、执行超时时间
+    public UserCommand(HystrixCommandGroupKey group, HystrixThreadPoolKey threadPool, int executionIsolationThreadTimeoutInMilliseconds) {
+        super(group,threadPool,executionIsolationThreadTimeoutInMilliseconds);
+    }
+    //=====================开启请求缓存=================================
+    /**
+     * 开启请求缓存，只需重载getCacheKey方法
+     * 因为我们这里使用的是id，不同的请求来请求的时候会有不同cacheKey所以，同一请求第一次访问会调用，之后都会走缓存
+     * 好处： 1.减少请求数、降低并发
+     *          2.同一用户上下文数据一致
+     *          3.这个方法会在run()和contruct()方法之前执行，减少线程开支
+     */
+    @Override
+    public String getCacheKey() {
+        return String.valueOf(id); //这不是唯一的方法，可自定义，保证同一请求返回同一值即可
+    }
+
+    /**
+     * 清理缓存
+     * 开启请求缓存之后，我们在读的过程中没有问题，但是我们如果是写，那么我们继续读之前的缓存了
+     * 我们需要把之前的cache清掉
+     * 说明 ：1.其中getInstance方法中的第一个参数的key名称要与实际相同
+     *          2.clear方法中的cacheKey要与getCacheKey方法生成的key方法相同
+     *          3.这个id可以通过实例化的
+     */
+    public static void flushRequestCache(Long id){
+        HystrixRequestCache.getInstance(
+                HystrixCommandKey.Factory.asKey(""), HystrixConcurrencyStrategyDefault.getInstance())
+                .clear(String.valueOf(id));
     }
 
     /**
@@ -32,10 +90,16 @@ public class UserCommand extends HystrixCommand<User> {
      */
     @Override
     protected User run() {
+        //清理缓存
+        UserCommand.flushRequestCache(this.getId()); //该方法位置可根据需要调整
         //本地请求
         return restTemplate.getForObject("http://localhost:8080/user", User.class);
         //连注册中心请求
 //        return restTemplate.getForObject("http://eureka-service/user", User.class);
+    }
+
+    public static Long getId() {
+        return id;
     }
 
     /**

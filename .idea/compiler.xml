@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="EurekaServer" />
         <module name="EurekaServiceProvider" />
+        <module name="HystrixDashboard" />
         <module name="RibbonConsumHystrix" />
         <module name="RibbonCustomer" />
         <module name="springboot" />
@@ -17,6 +18,7 @@
       <module name="EurekaServer" target="1.8" />
       <module name="EurekaServiceProvider" target="1.8" />
       <module name="HHHH" target="1.5" />
+      <module name="HystrixDashboard" target="1.6" />
       <module name="RibbonConsumHystrix" target="1.8" />
       <module name="RibbonCustomer" target="1.8" />
       <module name="springboot" target="1.6" />

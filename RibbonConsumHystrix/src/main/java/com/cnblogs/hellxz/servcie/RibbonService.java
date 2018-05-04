@@ -5,6 +5,9 @@ import com.cnblogs.hellxz.hystrix.UserCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
+import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -215,5 +218,46 @@ public class RibbonService {
         logger.info("捕获到异常： "+e.getMessage());
         return null;
     }
+//====================================================================
+    /**
+     * 通过@HystrixCommand 注解 设置组名、命令名、线程池名
+     * 当然也可以写fallbackMethod,举例就不写了
+     */
+    @HystrixCommand(groupKey = "groupKey",commandKey = "commandKey", threadPoolKey = "threadPool")
+    public User hystrixCommandComment(){
+
+        return restTemplate.getForObject("http://eureka-service/user", User.class);
+    }
+
+//====================================================================
+    /**
+     * 使用注解请求缓存
+     * @CacheResult  用于标记这是一个缓存方法
+     * @CacheKey 除了可以指定方法参数为缓存key之外，还可以指定对象中的属性作为缓存Key
+     * 说明：通过阅读部分源码发现，默认的cacheKey是空的，如果我们没有给cacheKey，缓存会失效
+     *         关于注解因为没找到处理的方法，此处留待考校
+     */
+    @CacheResult
+    @HystrixCommand(commandKey = "storeCache")
+    public User getUserAndStoreCache(@CacheKey("id") String id){
+        //此次结果会被缓存
+        return restTemplate.getForObject("http://eureka-service/user", User.class);
+    }
+
+    /**
+     * 使用注解清除缓存
+     * @CacheRemove 必须指定commandKey才能进行清除指定缓存
+     * 刚才捊了一下，发现CacheKey在自定义HystrixCommand中是作为清除的key，而使用注解的时候没有这个相同的cacheKey,只能用清除commandKey所对应的缓存
+     * 而且@CacheRemove中没有指定cacheKey的值，写操作不用缓存
+     */
+    @CacheRemove(commandKey = "storeCache")
+    @HystrixCommand
+    public User updateUserAndRemoveCache(){
+
+        //因为没有使用数据库，也就无从说起在写操作了，仅作说明
+        return null;
+    }
+//===================================================================
+
 
 }
