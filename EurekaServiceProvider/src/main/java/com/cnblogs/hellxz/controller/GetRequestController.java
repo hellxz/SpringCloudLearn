@@ -1,11 +1,16 @@
 package com.cnblogs.hellxz.controller;
 
 import com.cnblogs.hellxz.entity.User;
+import com.cnblogs.hellxz.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * @Author : Hellxz
@@ -66,4 +71,38 @@ public class GetRequestController {
             return new User("随机用户","male", "987654321");
         }
     }
+    //==================================================================================
+
+    /**
+     * 为消费端提供两个接口，一个是返回一个对象的，另一个是返回两个对象
+     */
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable Long id){
+        //因为没有使用数据库，只返回一个User对象
+        return new User("first", "女", "110-"+id);
+    }
+
+    @GetMapping("/users")
+    public List<User> getUsersByIds(@RequestParam("ids") String ids){
+        List<User> userList = new ArrayList<>();
+        User user = null;
+        logger.info("-=============ids="+ids);
+        List<String> stringList = StringUtils.commaSplitrStringToList(ids);
+        for(String id : stringList){
+            user = new User(id ,"男","123-"+id);
+            userList.add(user);
+        }
+        return userList;
+    }
+
+    /**
+     * 为了请求测试Hystrix请求缓存提供的返回随机数的接口
+     */
+    @GetMapping("/hystrix/cache")
+    public Integer getRandomInteger(){
+        Random random = new Random();
+        int randomInt = random.nextInt(99999);
+        return randomInt;
+    }
+
 }
