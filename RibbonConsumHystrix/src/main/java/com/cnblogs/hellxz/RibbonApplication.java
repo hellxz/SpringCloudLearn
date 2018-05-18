@@ -1,6 +1,7 @@
 package com.cnblogs.hellxz;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @Date : 2018/4/20 10:03
  */
 @SpringCloudApplication
+@ServletComponentScan //自定义Filter中用到
 public class RibbonApplication {
 
     @Bean
