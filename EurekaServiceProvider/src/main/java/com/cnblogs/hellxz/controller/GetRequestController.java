@@ -1,12 +1,14 @@
 package com.cnblogs.hellxz.controller;
 
 import com.cnblogs.hellxz.entity.User;
-import com.cnblogs.hellxz.utils.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,29 +73,6 @@ public class GetRequestController {
             return new User("随机用户","male", "987654321");
         }
     }
-    //==================================================================================
-
-    /**
-     * 为消费端提供两个接口，一个是返回一个对象的，另一个是返回两个对象
-     */
-    @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable Long id){
-        //因为没有使用数据库，只返回一个User对象
-        return new User("first", "女", "110-"+id);
-    }
-
-    @GetMapping("/users")
-    public List<User> getUsersByIds(@RequestParam("ids") String ids){
-        List<User> userList = new ArrayList<>();
-        User user = null;
-        logger.info("-=============ids="+ids);
-        List<String> stringList = StringUtils.commaSplitrStringToList(ids);
-        for(String id : stringList){
-            user = new User(id ,"男","123-"+id);
-            userList.add(user);
-        }
-        return userList;
-    }
 
     /**
      * 为了请求测试Hystrix请求缓存提供的返回随机数的接口
@@ -105,4 +84,25 @@ public class GetRequestController {
         return randomInt;
     }
 
+    /**
+     * 为Hystrix请求合并提供的接口
+     */
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable Long id){
+        logger.info("=========getUserById方法：入参ids："+id);
+        return new User("one"+id, "女", "110-"+id);
+    }
+
+    @GetMapping("/users")
+    public List<User> getUsersByIds(@RequestParam("ids") List<Long> ids){
+        List<User> userList = new ArrayList<>();
+        User user;
+        logger.info("=========getUsersByIds方法：入参ids："+ids);
+        for(Long id : ids){
+            user = new User("person"+id ,"男","123-"+id);
+            userList.add(user);
+        }
+
+        return userList;
+    }
 }
