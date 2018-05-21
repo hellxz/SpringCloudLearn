@@ -1,14 +1,18 @@
 package com.cnblogs.hellxz.controller;
 
 import com.cnblogs.hellxz.entity.User;
+import com.cnblogs.hellxz.hystrix.UserCollapseCommand;
 import com.cnblogs.hellxz.servcie.RibbonService;
 import com.netflix.hystrix.strategy.concurrency.HystrixRequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import rx.Observable;
 
+import java.awt.print.Book;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -169,7 +173,19 @@ public class RibbonController {
     @GetMapping("/users/{id}")
     public User findOne(@PathVariable Long id){
         LOGGER.debug("=============/hystrix/users/{} 执行了", id);
-        return service.findOne(id);
+        Future<User> userFuture = new UserCollapseCommand(service, id).queue();
+        User user = null;
+        try {
+            Thread.sleep(1000);
+            user = userFuture.get();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return user;
     }
 
     @GetMapping("/users")
@@ -177,4 +193,27 @@ public class RibbonController {
         LOGGER.debug("=============/hystrix/users?ids={} 执行了", ids);
         return service.findAll(ids);
     }
+
+    @GetMapping("/collapse")
+    public List<User> collapseTest(){
+        LOGGER.info("==========>collapseTest方法执行了");
+        List<User> userList = new ArrayList<>();
+        Future<User> queue1 = new UserCollapseCommand(service, 1L).queue();
+        Future<User> queue2 = new UserCollapseCommand(service, 2L).queue();
+        Future<User> queue3 = new UserCollapseCommand(service, 3L).queue();
+        try {
+            User user1 = queue1.get();
+            User user2 = queue2.get();
+            User user3 = queue3.get();
+            userList.add(user1);
+            userList.add(user2);
+            userList.add(user3);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return userList;
+    }
+
 }

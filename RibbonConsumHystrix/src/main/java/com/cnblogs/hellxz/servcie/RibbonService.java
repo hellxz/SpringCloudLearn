@@ -4,7 +4,6 @@ import com.cnblogs.hellxz.entity.User;
 import com.cnblogs.hellxz.hystrix.CacheCommand;
 import com.cnblogs.hellxz.hystrix.UserCollapseCommand;
 import com.cnblogs.hellxz.hystrix.UserCommand;
-import com.cnblogs.hellxz.utils.StringUtils;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
@@ -13,6 +12,7 @@ import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,8 @@ import org.springframework.web.client.RestTemplate;
 import rx.Observable;
 import rx.Subscriber;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -342,22 +344,28 @@ public class RibbonService {
     }
 
 
-
 //===================================================================
+
+    /**请求合并使用到的测试方法**/
+
     /**
-     * 请求合并
-     * 分别用两个请求展示
+     * 查一个User对象
      */
     public User findOne(Long id){
-//        LOGGER.info("RibbonConsumHystrix service执行了，id= "+id);
-//        return restTemplate.getForObject("http://eureka-service/users/{1}", User.class, id);
-        UserCollapseCommand userCollapseCommand = new UserCollapseCommand(this, id);
-        User user = userCollapseCommand.execute();
-        return user;
+        LOGGER.info("findOne方法执行了，id= "+id);
+        return restTemplate.getForObject("http://eureka-service/users/{1}", User.class, id);
     }
 
+    /**
+     * 查多个对象
+     *
+     * 注意： 这里用的是数组，作为结果的接收，因为restTemplate.getForObject方法在这里受限
+     *         如果尽如《SpringCloud微服务实战》一书中指定类型为List.class，会返回一个List<LinkedHashMap>类型的集合
+     *         为了避坑这里我们使用精妙数组的方式接收结果
+     */
     public List<User> findAll(List<Long> ids){
-        LOGGER.info("RibbonConsumHystrix service执行了，ids= "+ids.toString());
-        return restTemplate.getForObject("http://eureka-service/users?ids={1}", List.class ,StringUtils.listToStringSplitBySymbol(ids,","));
+        LOGGER.info("findAll方法执行了，ids= "+ids);
+        User[] users = restTemplate.getForObject("http://eureka-service/users?ids={1}", User[].class, StringUtils.join(ids, ","));
+        return Arrays.asList(users);
     }
 }

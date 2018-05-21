@@ -102,7 +102,7 @@ public class GetRequestController {
             user = new User("person"+id ,"男","123-"+id);
             userList.add(user);
         }
-
+        System.out.println(userList);
         return userList;
     }
 }

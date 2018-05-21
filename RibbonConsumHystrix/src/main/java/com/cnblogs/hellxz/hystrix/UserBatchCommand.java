@@ -22,14 +22,16 @@ public class UserBatchCommand extends HystrixCommand<List<User>> {
     private List<Long> ids;
 
     public UserBatchCommand(RibbonService ribbonService, List<Long> ids){
-        super(Setter.withGroupKey(asKey("userBatch")));
+        super(Setter.withGroupKey(asKey("userBatchCommand")));
         this.service = ribbonService;
         this.ids = ids;
     }
 
     @Override
     protected List<User> run() {
-        return service.findAll(ids);
+        List<User> users = service.findAll(ids);
+        System.out.println(users);
+        return users;
     }
 
 }

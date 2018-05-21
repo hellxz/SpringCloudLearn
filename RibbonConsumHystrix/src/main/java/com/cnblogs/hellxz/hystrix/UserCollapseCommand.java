@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
 //注意这个asKey方法不是HystrixCommandKey.Factory.asKey
 import static com.netflix.hystrix.HystrixCollapserKey.Factory.asKey;
+
 
 /**
  * @Author : Hellxz
@@ -24,12 +26,12 @@ public class UserCollapseCommand extends HystrixCollapser<List<User>,User,Long> 
     private Long userId;
 
     /**
-     * 构造方法，主要用来设置这个合并器的时间，意为每多少毫秒就会合并一次
+     * 构造方法，主要用来设置这个合并器的时间，意为每多少毫秒就会合并一次，为了测试设为1秒，正常可用100毫秒
      * @param ribbonService 调用的服务
      * @param userId 单个请求传入的参数
      */
     public UserCollapseCommand(RibbonService ribbonService, Long userId){
-        super(Setter.withCollapserKey(asKey("userCollapseCommand")).andCollapserPropertiesDefaults(HystrixCollapserProperties.Setter().withTimerDelayInMilliseconds(100)));
+        super(Setter.withCollapserKey(asKey("userCollapseCommand")).andCollapserPropertiesDefaults(HystrixCollapserProperties.Setter().withTimerDelayInMilliseconds(1000)));
         this.service = ribbonService;
         this.userId = userId;
     }
@@ -64,8 +66,8 @@ public class UserCollapseCommand extends HystrixCollapser<List<User>,User,Long> 
     protected void mapResponseToRequests(List<User> batchResponse, Collection<CollapsedRequest<User, Long>> collapsedRequests) {
         int count = 0 ;
         for(CollapsedRequest<User,Long> collapsedRequest : collapsedRequests){
-            User user = batchResponse.get(count++); //从返回的结果中按下标取出结果
-            collapsedRequest.setResponse(user); //放入响应中
+            User user = batchResponse.get(count++);
+            collapsedRequest.setResponse(user);
         }
     }
 }
