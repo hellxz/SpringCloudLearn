@@ -7,7 +7,9 @@ import com.cnblogs.hellxz.hystrix.UserCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandKey;
 import com.netflix.hystrix.HystrixCommandProperties;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCollapser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheKey;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
@@ -16,6 +18,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import rx.Observable;
@@ -361,9 +366,32 @@ public class RibbonService {
      *
      * 注意： 这里用的是数组，作为结果的接收，因为restTemplate.getForObject方法在这里受限
      *         如果尽如《SpringCloud微服务实战》一书中指定类型为List.class，会返回一个List<LinkedHashMap>类型的集合
-     *         为了避坑这里我们使用精妙数组的方式接收结果
+     *         为了避坑这里我们使用数组的方式接收结果
      */
     public List<User> findAll(List<Long> ids){
+        LOGGER.info("findAll方法执行了，ids= "+ids);
+        User[] users = restTemplate.getForObject("http://eureka-service/users?ids={1}", User[].class, StringUtils.join(ids, ","));
+        return Arrays.asList(users);
+    }
+
+    /**注解方式实现请求合并**/
+
+    /**
+     * 被合并请求的方法
+     * 注意是timerDelayInMilliseconds，注意拼写
+     */
+    @HystrixCollapser(batchMethod = "findAllByAnnotation",collapserProperties = {@HystrixProperty(name = "timerDelayInMilliseconds",value = "100")})
+    public Future<User> findOneByAnnotation(Long id){
+        //你会发现根本不会进入这个方法体
+        LOGGER.info("findOne方法执行了，ids= "+id);
+        return null;
+    }
+
+    /**
+     * 真正执行的方法
+     */
+    @HystrixCommand
+    public List<User> findAllByAnnotation(List<Long> ids){
         LOGGER.info("findAll方法执行了，ids= "+ids);
         User[] users = restTemplate.getForObject("http://eureka-service/users?ids={1}", User[].class, StringUtils.join(ids, ","));
         return Arrays.asList(users);

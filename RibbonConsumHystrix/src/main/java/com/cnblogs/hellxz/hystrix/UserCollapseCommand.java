@@ -66,7 +66,9 @@ public class UserCollapseCommand extends HystrixCollapser<List<User>,User,Long> 
     protected void mapResponseToRequests(List<User> batchResponse, Collection<CollapsedRequest<User, Long>> collapsedRequests) {
         int count = 0 ;
         for(CollapsedRequest<User,Long> collapsedRequest : collapsedRequests){
+            //从批响应集合中按顺序取出结果
             User user = batchResponse.get(count++);
+            //将结果放回原Request的响应体内
             collapsedRequest.setResponse(user);
         }
     }

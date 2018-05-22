@@ -31,6 +31,18 @@ public class UserBatchCommand extends HystrixCommand<List<User>> {
         this.ids = ids;
     }
 
+    /**
+     * <b>方法名</b>: run
+     * <p><b>描    述</b>: 调用服务层的简单调用返回集合</p>
+     *
+     * @param
+     * @return  List<User>
+     *
+     * <p><b>创建日期</b> 2018/5/22 12:39 </p>
+     * @author HELLXZ 张
+     * @version 1.0
+     * @since jdk 1.8
+     */
     @Override
     protected List<User> run() {
         List<User> users = service.findAll(ids);
@@ -38,6 +50,9 @@ public class UserBatchCommand extends HystrixCommand<List<User>> {
         return users;
     }
 
+    /**
+     * Fallback回调方法，如果没有会报错
+     */
     @Override
     protected List<User> getFallback(){
         LOGGER.info("UserBatchCommand的run方法，调用失败");

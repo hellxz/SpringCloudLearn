@@ -237,4 +237,17 @@ public class RibbonController {
         return userList;
     }
 
+    /**
+     * 注解方式的请求合并
+     *
+     * 这里真想不出怎么去测试 这个方法了，有什么好的并发测试框架请自测吧，如果找到这种神器
+     * 请给我发邮件告诉我： hellxz001@foxmail.com
+     */
+    @GetMapping("/collapsebyannotation/{id}")
+    public User collapseByAnnotation(@PathVariable Long id) throws ExecutionException, InterruptedException {
+        Future<User> one = service.findOneByAnnotation(id);
+        User user = one.get();
+        return user;
+    }
+
 }
