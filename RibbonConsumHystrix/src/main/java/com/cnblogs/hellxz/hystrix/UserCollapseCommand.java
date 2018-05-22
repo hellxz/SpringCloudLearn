@@ -26,12 +26,12 @@ public class UserCollapseCommand extends HystrixCollapser<List<User>,User,Long> 
     private Long userId;
 
     /**
-     * 构造方法，主要用来设置这个合并器的时间，意为每多少毫秒就会合并一次，为了测试设为1秒，正常可用100毫秒
+     * 构造方法，主要用来设置这个合并器的时间，意为每多少毫秒就会合并一次
      * @param ribbonService 调用的服务
      * @param userId 单个请求传入的参数
      */
     public UserCollapseCommand(RibbonService ribbonService, Long userId){
-        super(Setter.withCollapserKey(asKey("userCollapseCommand")).andCollapserPropertiesDefaults(HystrixCollapserProperties.Setter().withTimerDelayInMilliseconds(1000)));
+        super(Setter.withCollapserKey(asKey("userCollapseCommand")).andCollapserPropertiesDefaults(HystrixCollapserProperties.Setter().withTimerDelayInMilliseconds(100)));
         this.service = ribbonService;
         this.userId = userId;
     }

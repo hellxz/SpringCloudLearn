@@ -166,34 +166,35 @@ public class RibbonController {
     }
 
 
-    //========================================================
+    /**请求合并测试**/
+
     /**
-     * 请求合并测试
+     * 单个请求处理
+     * @param id
      */
     @GetMapping("/users/{id}")
     public User findOne(@PathVariable Long id){
         LOGGER.debug("=============/hystrix/users/{} 执行了", id);
-        Future<User> userFuture = new UserCollapseCommand(service, id).queue();
-        User user = null;
-        try {
-            Thread.sleep(1000);
-            user = userFuture.get();
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
+        User user = service.findOne(id);
         return user;
     }
 
+    /**
+     * 多个请求处理
+     * @param ids id串，使用逗号分隔
+     */
     @GetMapping("/users")
     public List<User> findAll(@RequestParam List<Long> ids){
         LOGGER.debug("=============/hystrix/users?ids={} 执行了", ids);
         return service.findAll(ids);
     }
 
+    /**
+     * 合并请求测试
+     * 说明：这个测试本应在findOne方法中new一个UserCollapseCommand对象进行测试
+     *         苦于没有好的办法做并发实验，这里就放在一个Controller中了
+     *         我们看到，在这个方法中用了三个UserCollapseCommand对象进行模拟高并发
+     */
     @GetMapping("/collapse")
     public List<User> collapseTest(){
         LOGGER.info("==========>collapseTest方法执行了");
@@ -213,6 +214,26 @@ public class RibbonController {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        return userList;
+    }
+
+    /**
+     * 同步方法测试合并请求
+     *
+     * 说明：这个方法是用来与上面的方法做类比的，通过这个实验我们发现如果使用同步方法，
+     *         那么这个请求合并的作用就没有了，这会给findAll方法造成性能浪费
+     */
+    @GetMapping("synccollapse")
+    public List<User> syncCollapseTest(){
+        LOGGER.info("==========>syncCollapseTest方法执行了");
+        List<User> userList = new ArrayList<>();
+        User user1 = new UserCollapseCommand(service, 1L).execute();
+        User user2 = new UserCollapseCommand(service, 2L).execute();
+        User user3 = new UserCollapseCommand(service, 3L).execute();
+        userList.add(user1);
+        userList.add(user2);
+        userList.add(user3);
         return userList;
     }
 
