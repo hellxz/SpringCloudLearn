@@ -3,6 +3,7 @@ package com.cnblogs.hellxz;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringCloudApplication
 @ServletComponentScan //自定义Filter中用到
+@EnableCircuitBreaker //开启被dashboard监控
 public class RibbonApplication {
 
     @Bean
