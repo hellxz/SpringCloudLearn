@@ -13,6 +13,7 @@
         <module name="RibbonCustomer" />
         <module name="springboot" />
         <module name="Turbine" />
+        <module name="TurbineAmqp" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="RibbonCustomer" target="1.8" />
       <module name="springboot" target="1.6" />
       <module name="Turbine" target="1.8" />
+      <module name="TurbineAmqp" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
