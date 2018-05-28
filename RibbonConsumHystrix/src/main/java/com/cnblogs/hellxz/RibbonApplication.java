@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @SpringCloudApplication
 @ServletComponentScan //自定义Filter中用到
-@EnableCircuitBreaker //开启被dashboard监控
+//@EnableCircuitBreaker //开启被dashboard监控，该注解在@SpringCloudApplication中存在
 public class RibbonApplication {
 
     @Bean
