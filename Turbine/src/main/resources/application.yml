@@ -12,4 +12,6 @@ turbine:
   app-config: ribbon-hystrix #指定了被收集的app名称
   combine-host-port: true #同一主机多个服务使用hostname+port进行区分，此项默认为false，即同一主机多服务会合并成一个服务展示
   cluster-name-expression: new String("default") #指定集群名称，书中直接使用“default“，这里已经不能用了，会报错
+management:
+  port: 8990
 
