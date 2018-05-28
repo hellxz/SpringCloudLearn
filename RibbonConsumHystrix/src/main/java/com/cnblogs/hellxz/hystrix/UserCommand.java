@@ -80,6 +80,7 @@ public class UserCommand extends HystrixCommand<User> {
      * 问题解决请参考：https://blog.csdn.net/lvyuan1234/article/details/76550706
      * 本人在书中基础上已经完成调用注册中心服务的功能，见RibbonService类中具体实现
      */
+    /**
     public static void main(String[] args) {
         //初始化请求上下文，这一行只在main方法中维持之前代码的可用
         HystrixRequestContext.initializeContext();
@@ -113,6 +114,6 @@ public class UserCommand extends HystrixCommand<User> {
         System.out.println("------------------This is observe's response:"+observe);
         Observable<User> userObservable = userCommand.toObservable();
         System.out.println("------------------This is toObserve's response:"+userObservable);
-    }
+    }*/
 
 }
