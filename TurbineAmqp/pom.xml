@@ -32,6 +32,17 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!--Hystrix的依赖，不加会报ClassNotFound异常-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix</artifactId>
+        </dependency>
+        <!--加入此依赖，避免Caused by: java.lang.ClassNotFoundException: com.netflix.turbine.aggregator.InstanceKey-->
+        <dependency>
+            <groupId>com.netflix.turbine</groupId>
+            <artifactId>turbine-core</artifactId>
+            <version>2.0.0-DP.2</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
