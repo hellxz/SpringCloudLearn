@@ -16,4 +16,5 @@ public interface EurekaServiceFeign {
 
     @RequestMapping(value = "/hello", method=RequestMethod.GET)
     String helloFeign();
+
 }

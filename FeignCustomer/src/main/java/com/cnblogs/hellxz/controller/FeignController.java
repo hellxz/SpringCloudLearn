@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("feign")
-public class helloController {
+public class FeignController {
 
     @Autowired
     private EurekaServiceFeign eurekaServiceFeign;
