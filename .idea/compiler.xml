@@ -20,7 +20,7 @@
     <bytecodeTargetLevel>
       <module name="EurekaServer" target="1.8" />
       <module name="EurekaServiceProvider" target="1.8" />
-      <module name="FeignCustomer" target="1.6" />
+      <module name="FeignCustomer" target="1.8" />
       <module name="HHHH" target="1.5" />
       <module name="HystrixDashboard" target="1.6" />
       <module name="RibbonConsumHystrix" target="1.8" />
