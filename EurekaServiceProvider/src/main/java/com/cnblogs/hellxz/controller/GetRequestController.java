@@ -5,10 +5,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,5 +101,10 @@ public class GetRequestController {
         }
         System.out.println(userList);
         return userList;
+    }
+
+    @GetMapping("/headers")
+    public String getParamByRequestHeader(@RequestHeader("name") String name){
+        return name;
     }
 }
