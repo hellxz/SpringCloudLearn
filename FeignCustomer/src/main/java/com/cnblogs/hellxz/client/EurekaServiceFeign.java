@@ -15,7 +15,7 @@ import java.util.List;
  */
 //其中的value的值为要调用服务的名称, configuration中配置的是禁用Feign中的Hystrix功能的类
 //如需使用Hystrix功能，请去掉configuration中的禁用Hystrix的配置类
-@FeignClient(value = "eureka-service",configuration = DisableHystrixConfiguration.class)
+@FeignClient(value = "eureka-service",configuration = DisableHystrixConfiguration.class, fallback = EurekaServiceFeignFallback.class)
 public interface EurekaServiceFeign {
 
     /**
@@ -53,4 +53,10 @@ public interface EurekaServiceFeign {
      */
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     User getUserByRequestBody(@RequestBody User user);
+
+    /**
+     * 测试重连机制
+     */
+    @RequestMapping(value = "/retry", method = RequestMethod.GET)
+    String feignRetry();
 }

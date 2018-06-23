@@ -7,3 +7,10 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://peer1:1111/eureka
+ribbon:
+  # 同一实例最大重试次数，不包括首次调用
+  MaxAutoRetries: 1
+  # 重试其他实例的最大重试次数，不包括首次所选的server
+  MaxAutoRetriesNextServer: 2
+  # 是否所有操作都进行重试
+  OkToRetryOnAllOperations: false

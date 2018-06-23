@@ -16,6 +16,14 @@
     </parent>
 
     <dependencies>
+
+        <!--添加服务提供者的依赖-->
+        <dependency>
+            <groupId>com.cnblogs.hellxz</groupId>
+            <artifactId>EurekaServiceProvider</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
         <!-- Hystrix，Feign是基于Hystrix的-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

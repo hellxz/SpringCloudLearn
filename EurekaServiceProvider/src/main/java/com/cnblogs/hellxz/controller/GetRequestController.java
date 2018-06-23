@@ -107,4 +107,19 @@ public class GetRequestController {
     public String getParamByRequestHeader(@RequestHeader("name") String name){
         return name;
     }
+
+    /**
+     * 测试Feign延迟重试的代码
+     * 这里我们为这个方法加上超过Feign默认2000ms以上的延迟，我们只需要通过查看日志输出即可
+     */
+    @GetMapping("/retry")
+    public String feignRetry(){
+        logger.info("feignRetry方法调用成功");
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return "ok";
+    }
 }

@@ -2,6 +2,7 @@ package com.cnblogs.hellxz.controller;
 
 
 import com.cnblogs.hellxz.client.EurekaServiceFeign;
+import com.cnblogs.hellxz.client.RefactorHelloServiceFeign;
 import com.cnblogs.hellxz.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,9 @@ public class HelloController {
 
     @Autowired
     private EurekaServiceFeign eurekaServiceFeign; //注入Feign
+
+    @Autowired
+    private RefactorHelloServiceFeign refactorHelloServiceFeign;
 
     @GetMapping("/hello")
     @ResponseBody
@@ -59,4 +63,21 @@ public class HelloController {
         return eurekaServiceFeign.getUserByRequestBody(user);
     }
 
+    /**
+     * 测试Feign的继承特性
+     */
+    @GetMapping("/refactor/{name}")
+    @ResponseBody
+    public String refactorHelloService(@PathVariable String name){
+        return refactorHelloServiceFeign.hello(name);
+    }
+
+    /**
+     * 测试重连机制
+     */
+    @GetMapping("/retry")
+    @ResponseBody
+    public String retry(){
+        return eurekaServiceFeign.feignRetry();
+    }
 }
