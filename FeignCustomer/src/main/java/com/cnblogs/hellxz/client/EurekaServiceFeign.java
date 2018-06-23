@@ -1,8 +1,8 @@
 package com.cnblogs.hellxz.client;
 
+import com.cnblogs.hellxz.config.DisableHystrixConfiguration;
 import com.cnblogs.hellxz.entity.User;
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +13,9 @@ import java.util.List;
  * 我们只需在声明它的Feign-client的名字，会自动去调用注册中心的这个名字的服务
  * 更简单的理解是value相当于MVC中的Controller类的父路径，通过"父路径+子路径和参数来调用服务"
  */
-@FeignClient(value = "eureka-service") //其中的value的值为要调用服务的名称
+//其中的value的值为要调用服务的名称, configuration中配置的是禁用Feign中的Hystrix功能的类
+//如需使用Hystrix功能，请去掉configuration中的禁用Hystrix的配置类
+@FeignClient(value = "eureka-service",configuration = DisableHystrixConfiguration.class)
 public interface EurekaServiceFeign {
 
     /**

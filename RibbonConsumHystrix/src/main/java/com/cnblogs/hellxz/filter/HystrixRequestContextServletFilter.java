@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 @WebFilter(filterName = "hystrixRequestContextServletFilter",urlPatterns = "/*",asyncSupported = true)
 public class HystrixRequestContextServletFilter implements Filter {
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException {
         //初始化Hystrix请求上下文
         HystrixRequestContext context = HystrixRequestContext.initializeContext();
         try {
