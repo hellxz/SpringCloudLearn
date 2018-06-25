@@ -15,6 +15,7 @@
         <module name="springboot" />
         <module name="Turbine" />
         <module name="TurbineAmqp" />
+        <module name="ZuulGateway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +29,8 @@
       <module name="springboot" target="1.6" />
       <module name="Turbine" target="1.8" />
       <module name="TurbineAmqp" target="1.8" />
+      <module name="ZuulGateway" target="1.8" />
+      <module name="ZuulGateWay" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

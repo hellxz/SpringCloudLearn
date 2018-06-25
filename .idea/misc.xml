@@ -20,6 +20,7 @@
         <option value="$PROJECT_DIR$/Turbine/pom.xml" />
         <option value="$PROJECT_DIR$/TurbineAmqp/pom.xml" />
         <option value="$PROJECT_DIR$/FeignCustomer/pom.xml" />
+        <option value="$PROJECT_DIR$/ZuulGateway/pom.xml" />
       </list>
     </option>
   </component>

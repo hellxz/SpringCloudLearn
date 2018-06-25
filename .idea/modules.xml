@@ -10,6 +10,7 @@
       <module fileurl="file://$PROJECT_DIR$/RibbonCustomer/RibbonCustomer.iml" filepath="$PROJECT_DIR$/RibbonCustomer/RibbonCustomer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Turbine/Turbine.iml" filepath="$PROJECT_DIR$/Turbine/Turbine.iml" />
       <module fileurl="file://$PROJECT_DIR$/TurbineAmqp/TurbineAmqp.iml" filepath="$PROJECT_DIR$/TurbineAmqp/TurbineAmqp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ZuulGateway/ZuulGateway.iml" filepath="$PROJECT_DIR$/ZuulGateway/ZuulGateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/idea-workspace.iml" filepath="$PROJECT_DIR$/.idea/idea-workspace.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpringBoot/springboot.iml" filepath="$PROJECT_DIR$/SpringBoot/springboot.iml" />
     </modules>
