@@ -4,9 +4,16 @@ spring:
 server:
   port: 5555
 
-                                                           #传统路由的实现方式
 zuul:
   routes:
-    hello-url:                                        #这里的"hello-url"是路由的名字，可以自定义，同一个跳转的path和url的路由名称要相同
-      path: /hello-url/**                        #映射的url
+    traditional-url:                             #传统的路由配置,此名称可以自定义
+      path: /tr-url/**                           #映射的url
       url: http://localhost:9001/           #被映射的url
+    orient-service-url:                       #面向服务的路由配置,此名称可以自定义
+      path: /os-url/**
+      service-id: feign-customer           #服务名
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1111/eureka/

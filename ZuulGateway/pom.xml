@@ -14,10 +14,17 @@
         <version>Dalston.SR5</version>
         <relativePath/>
     </parent>
+
     <dependencies>
+        <!-- Zuul的依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zuul</artifactId>
+        </dependency>
+        <!-- Eureka的依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
     </dependencies>
 
