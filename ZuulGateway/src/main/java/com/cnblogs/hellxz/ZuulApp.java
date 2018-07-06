@@ -1,10 +1,8 @@
 package com.cnblogs.hellxz;
 
-        import com.cnblogs.hellxz.filter.AccessFilter;
-        import org.springframework.boot.SpringApplication;
-        import org.springframework.cloud.client.SpringCloudApplication;
-        import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
-        import org.springframework.context.annotation.Bean;
+import org.springframework.boot.SpringApplication;
+import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 
 @EnableZuulProxy //开启zuul网关服务功能
 @SpringCloudApplication
