@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: hellxztest
+  cloud:
+    config:
+      uri: http://localhost:7001/
+      profile: dev
+      label: master
+server:
+  port: 7002

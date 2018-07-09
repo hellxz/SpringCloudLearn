@@ -23,6 +23,7 @@
         <option value="$PROJECT_DIR$/ZuulGateway/pom.xml" />
         <option value="$PROJECT_DIR$/ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/DynamicRouteZuul/pom.xml" />
+        <option value="$PROJECT_DIR$/ConfigClient/pom.xml" />
       </list>
     </option>
   </component>
