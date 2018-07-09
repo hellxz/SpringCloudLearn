@@ -65,5 +65,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.3.13.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:4.3.13.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.3.13.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:1.5.9.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:1.5.9.RELEASE" level="project" />
   </component>
 </module>
