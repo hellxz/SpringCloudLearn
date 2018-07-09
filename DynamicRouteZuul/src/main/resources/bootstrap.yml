@@ -1,12 +1,12 @@
 spring:
   application:
-    name: dynamic-route-zuul
+    name: dynamic-route-zuul                            #这个名字用做拉取配置文件的名称
   cloud:
     config:
-      uri: http://localhost:7001/
+      uri: http://localhost:7001/                         #指定Spring Cloud Config开放的项目端口
 server:
   port: 5556
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://peer1:1111/eureka/
+      defaultZone: http://peer1:1111/eureka/     #注册到注册中心中
