@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: dynamic-route-zuul
+  cloud:
+    config:
+      uri: http://localhost:7001/
+server:
+  port: 5556
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peer1:1111/eureka/

@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ConfigServer" />
+        <module name="DynamicRouteZuul" />
         <module name="EurekaServer" />
         <module name="EurekaServiceProvider" />
         <module name="FeignCustomer" />
@@ -21,6 +22,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="ConfigServer" target="1.8" />
+      <module name="DynamicRouteZuul" target="1.8" />
       <module name="EurekaServer" target="1.8" />
       <module name="EurekaServiceProvider" target="1.8" />
       <module name="FeignCustomer" target="1.8" />
