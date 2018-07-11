@@ -9,6 +9,6 @@ spring:
       server:
         git:
           uri: https://github.com/hellxz/SpringCloudlearn
-          search-paths: config-repo
+          searchPaths: config-repo
           username: username  #账号密码写真实的快一些我觉得，不使用也能访问有点慢
           password: password
