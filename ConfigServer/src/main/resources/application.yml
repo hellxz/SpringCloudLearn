@@ -7,8 +7,17 @@ spring:
   cloud:
     config:
       server:
+#        health:
+#          repositories:
+#            myservice:
+#              label: mylabel
+#            myservice-dev:
+#              name: myservice
+#              profiles: development
         git:
           uri: https://github.com/hellxz/SpringCloudlearn
           searchPaths: config-repo
           username: username  #账号密码写真实的快一些我觉得，不使用也能访问有点慢
           password: password
+encrypt:
+  key: hellxz
