@@ -36,6 +36,11 @@
             <!--<groupId>org.springframework.cloud</groupId>-->
             <!--<artifactId>spring-cloud-security</artifactId>-->
         <!--</dependency>-->
+        <!-- Spring Cloud Eureka的依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

@@ -1,13 +1,20 @@
 spring:
   application:
-    name: hellxztest            #指定了配置文件的应用名
+    name: hellxztest                     #指定了配置文件的应用名
   cloud:
     config:
-      uri: http://localhost:7001/   #Config server的uri
-      profile: dev                       #指定的环境
-      label: master                    #指定分支
+#      uri: http://localhost:7001/    #Config server的uri
+      profile: dev                          #指定的环境
+      label: master                        #指定分支
+      discovery:
+        enabled: true                     #开启配置服务发现
+        serviceId: config-server        #配置中心服务名
 server:
   port: 7002
 management:
   security:
     enabled: false     #SpringBoot 1.5.X 以上默认开通了安全认证，如果不关闭会要求权限
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1111/eureka/
