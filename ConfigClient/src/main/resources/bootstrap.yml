@@ -9,6 +9,13 @@ spring:
       discovery:
         enabled: true                     #开启配置服务发现
         serviceId: config-server        #配置中心服务名
+      fail-fast: true                        #快速失败
+      retry:
+        initial-interval: 1100             #首次重试间隔时间，默认1000毫秒
+        multiplier: 1.1D                    #下一次重试间隔时间的乘数，比如开始1000，下一次就是1000*1.1=1100
+        max-interval: 2000              #最大重试时间，默认2000
+        max-attempts: 3                 #最大重试次数，默认6次
+
 server:
   port: 7002
 management:
