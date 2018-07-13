@@ -21,3 +21,8 @@ spring:
           password: password
 encrypt:
   key: hellxz
+  key-store:
+    location: config-server.keystore
+    alias: config-server
+    password: hellxz
+    secret: hellxz
