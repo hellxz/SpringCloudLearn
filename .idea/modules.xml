@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/EurekaServiceProvider/EurekaServiceProvider.iml" filepath="$PROJECT_DIR$/EurekaServiceProvider/EurekaServiceProvider.iml" />
       <module fileurl="file://$PROJECT_DIR$/FeignCustomer/FeignCustomer.iml" filepath="$PROJECT_DIR$/FeignCustomer/FeignCustomer.iml" />
       <module fileurl="file://$PROJECT_DIR$/HystrixDashboard/HystrixDashboard.iml" filepath="$PROJECT_DIR$/HystrixDashboard/HystrixDashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/LoggingConsumer/LoggingConsumer.iml" filepath="$PROJECT_DIR$/LoggingConsumer/LoggingConsumer.iml" />
       <module fileurl="file://$PROJECT_DIR$/RibbonConsumHystrix/RibbonConsumHystrix.iml" filepath="$PROJECT_DIR$/RibbonConsumHystrix/RibbonConsumHystrix.iml" />
       <module fileurl="file://$PROJECT_DIR$/RibbonCustomer/RibbonCustomer.iml" filepath="$PROJECT_DIR$/RibbonCustomer/RibbonCustomer.iml" />
       <module fileurl="file://$PROJECT_DIR$/Turbine/Turbine.iml" filepath="$PROJECT_DIR$/Turbine/Turbine.iml" />

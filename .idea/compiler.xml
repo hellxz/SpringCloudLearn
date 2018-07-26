@@ -13,6 +13,7 @@
         <module name="EurekaServiceProvider" />
         <module name="FeignCustomer" />
         <module name="HystrixDashboard" />
+        <module name="LoggingConsumer" />
         <module name="RibbonConsumHystrix" />
         <module name="RibbonCustomer" />
         <module name="springboot" />
@@ -30,6 +31,7 @@
       <module name="FeignCustomer" target="1.8" />
       <module name="HHHH" target="1.5" />
       <module name="HystrixDashboard" target="1.5" />
+      <module name="LoggingConsumer" target="1.8" />
       <module name="RibbonConsumHystrix" target="1.8" />
       <module name="RibbonCustomer" target="1.8" />
       <module name="springboot" target="1.6" />
