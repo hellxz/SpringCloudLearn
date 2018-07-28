@@ -9,10 +9,10 @@
     <file url="file://$PROJECT_DIR$/FeignCustomer" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/HystrixDashboard" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/LoggingConsumer" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/LoggingConsumer" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RibbonConsumHystrix" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/RibbonCustomer" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SpringBoot" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/StreamSender" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Turbine" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TurbineAmqp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ZuulGateway" charset="UTF-8" />

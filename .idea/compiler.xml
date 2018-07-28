@@ -17,6 +17,7 @@
         <module name="RibbonConsumHystrix" />
         <module name="RibbonCustomer" />
         <module name="springboot" />
+        <module name="StreamSender" />
         <module name="Turbine" />
         <module name="TurbineAmqp" />
         <module name="ZuulGateway" />
@@ -35,6 +36,7 @@
       <module name="RibbonConsumHystrix" target="1.8" />
       <module name="RibbonCustomer" target="1.8" />
       <module name="springboot" target="1.6" />
+      <module name="StreamSender" target="1.8" />
       <module name="Turbine" target="1.8" />
       <module name="TurbineAmqp" target="1.8" />
       <module name="ZuulGateway" target="1.8" />

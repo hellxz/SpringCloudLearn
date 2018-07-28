@@ -25,6 +25,7 @@
         <option value="$PROJECT_DIR$/DynamicRouteZuul/pom.xml" />
         <option value="$PROJECT_DIR$/ConfigClient/pom.xml" />
         <option value="$PROJECT_DIR$/LoggingConsumer/pom.xml" />
+        <option value="$PROJECT_DIR$/StreamSender/pom.xml" />
       </list>
     </option>
   </component>
