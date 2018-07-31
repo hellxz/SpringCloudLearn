@@ -24,7 +24,7 @@ public class FirstStreamApp {
 	}
 
 	@StreamListener(MyPipe.INPUT)
-	public void receiver(Object payload){
+	public void receiveFromMyPipe(Object payload){
 		logger.info("Received: "+payload);
 	}
 }
