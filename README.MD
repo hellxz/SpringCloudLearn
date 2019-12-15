@@ -5,7 +5,7 @@
 本项目集合为个人SpringCloud学习时源代码，开发工具为Intellij Idea  
 学习书籍为《SpringCloud微服务实战》，项目中按照书中学习到的知识和本人实际操作中遇到的问题做出的整理
 
-更详细的记载目前是在[本人博客园](https://www.cnblogs.com/hellxz)中，如有兴趣欢迎一起讨论学习
+更详细的记载目前是在[本人博客园](https://www.cnblogs.com/hellxz/category/1203216.html)中，如有兴趣欢迎一起讨论学习
 如果本仓库对你有所帮助，请不吝star。博客园欢迎大家关注、评论、拍砖。
 
 ## 各模块端口占用表
