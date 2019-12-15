@@ -24,13 +24,6 @@
 | DynamicRouteZuul      | 5556   |
 | ConfigServer          | 7001   |
 | ConfigClient          | 7002   |
-|                       |        |
-|                       |        |
-|                       |        |
-|                       |        |
-|                       |        |
-|                       |        |
-|                       |        |
 ----
 2018-06-15
 有点问题一直没有提醒大家，EurekaServer等几个项目用的host是本地写好的，在本系列文章的第一文中有写，但是还是有人不知道，

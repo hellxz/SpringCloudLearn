@@ -26,6 +26,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="EurekaServiceProvider" />
+    <orderEntry type="module" module-name="EurekaServiceProvider" />
+    <orderEntry type="module" module-name="EurekaServiceProvider" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-test:1.5.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-test-autoconfigure:1.5.9.RELEASE" level="project" />
